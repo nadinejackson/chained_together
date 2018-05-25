@@ -24,7 +24,7 @@ void setup()
   {
     float xcor = random(15, width - 15);
     float ycor = random(15, height - 15);
-    float r = int(random(25, 50));
+    float r = int(random(12, 20));
     color col = color(int(random(255)), int(random(255)), int(random(255)));
     float xspeed = random(-8, 8);
     float yspeed = random(-8, 8);
@@ -87,12 +87,9 @@ void fixStatesNear(Ball main)
 
 boolean inVicinity(Ball a, Ball b) //figures distances between balls
 {
-  //float leg_1 = abs(a.getX() - b.getY());
-  //float leg_2 = abs(a.getY() - b.getY());
   float leg_1 = pow(a.getX() - b.getX(), 2);
   float leg_2 = pow(a.getY() - b.getY(), 2);
   float hyp = pow(a.getRad() + b.getRad(), 2);
-  
-  //return leg_1 <= hyp && leg_2 <= hyp;
-  return leg_1 + leg_2 <  hyp / 4;
+
+  return leg_1 + leg_2 <  hyp;
 }

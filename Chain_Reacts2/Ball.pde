@@ -42,17 +42,17 @@ class Ball
   {
     return rad;
   }
-  
+
   float getX()
   {
     return x;
   }
-  
+
   float getY()
   {
     return y;
   }
-  
+
 
   void setState(int s)
   {
@@ -89,7 +89,7 @@ class Ball
     if (state != DEAD)
     {
       fill(c);
-      ellipse(x, y, rad, rad);
+      ellipse(x, y, rad * 2, rad * 2);
     }
   }
 }
