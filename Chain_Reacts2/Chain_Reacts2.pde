@@ -5,6 +5,7 @@
 
 ArrayList<Ball> Balls;
 
+//instance vars
 final static int MOVING = 0;
 final static int GROWING = 1;
 final static int SHRINKING = 2;
@@ -20,6 +21,7 @@ void setup()
   size(600, 600);
   Balls = new ArrayList<Ball>();
 
+  //create 30 new balls to move around like last time
   for (int i = 0; i < 30; i++)
   {
     float xcor = random(15, width - 15);
@@ -39,11 +41,11 @@ void draw()
 {
   background(000);
 
-  for (Ball each : Balls)
+  for (Ball each : Balls) //at every refresh of the screen, the balls need to move and refill
   { 
     each.move();
     each.position();
-  }
+  } //check who's around
   resetStates();
 }
 
@@ -80,7 +82,7 @@ void fixStatesNear(Ball main)
 {
   for (Ball each : Balls)
   {
-    if (each.getState() == MOVING && inVicinity(main, each))
+    if (each.getState() == MOVING && inVicinity(main, each)) //check who's nearby and grow if one of the stopped balls touches
       each.setState(GROWING);
   }
 }

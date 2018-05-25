@@ -3,8 +3,9 @@
 //HW #53: All That Bouncin’ . . . Break!
 //2018-05-24 r
 
-class Ball
+class Ball //oo wow how slick
 {
+  //instance vars
   final static int MOVING = 0;
   final static int GROWING = 1;
   final static int SHRINKING = 2;
@@ -22,8 +23,10 @@ class Ball
   float dy;
   int state;
 
+  //constructor
   Ball(float xcor, float ycor, float r, color col, float xspeed, float yspeed, int s)
   {
+    //initialize all values at creation
     x = xcor;
     y = ycor;
     rad = r;
@@ -33,6 +36,7 @@ class Ball
     state = s;
   }
 
+  //accessors
   int getState()
   {
     return state;
@@ -53,7 +57,7 @@ class Ball
     return y;
   }
 
-
+  //mutator
   void setState(int s)
   {
     state = s;
@@ -61,19 +65,19 @@ class Ball
 
   void move()
   {
-    if (state == MOVING)
+    if (state == MOVING) //if it hasn't been infected
     {
       x += dx;
       y += dy;
 
-      wallInteraction();
+      wallInteraction(); //remember that bounce
     }
 
-    if (state == GROWING)
-      rad += CHANGE_FACTOR;
+    else if (state == GROWING)
+      rad += CHANGE_FACTOR; //or grow
 
-    if (state == SHRINKING)
-      rad -= CHANGE_FACTOR;
+    else if (state == SHRINKING)
+      rad -= CHANGE_FACTOR; //or shrink
   }
 
   void wallInteraction()
@@ -88,7 +92,7 @@ class Ball
   {
     if (state != DEAD)
     {
-      fill(c);
+      fill(c); //have to redraw the circle each time 
       ellipse(x, y, rad * 2, rad * 2);
     }
   }
