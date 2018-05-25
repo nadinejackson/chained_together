@@ -14,27 +14,25 @@ final static float CHANGE_FACTOR = .25;
 final static float MAX_RADIUS = 50;
 final static int BOUNDARY = 15;
 
-//create Balls at random coords
 void setup()
 {
   size(600, 600);
   Balls = new ArrayList<Ball>();
 
-  for (int i = 0; i < 30; i++)
+  for (int i = 0; i < 4; i++)
   {
     float xcor = random(15, width - 15);
     float ycor = random(15, height - 15);
-    float r = int(random(25, 50));
+    float r = 40;//int(random(25, 50));
     color col = color(int(random(255)), int(random(255)), int(random(255)));
-    float xspeed = random(-8, 8);
-    float yspeed = random(-8, 8);
+    float xspeed = 0;//random(-2, 2);
+    float yspeed = 2;//random(-2, 2);
     int s = MOVING; 
 
     Balls.add(new Ball(xcor, ycor, r, col, xspeed, yspeed, s));
   }
 }
 
-//update positions
 void draw()
 {
   background(000);
@@ -47,7 +45,6 @@ void draw()
   resetStates();
 }
 
-//creates a new Ball and adds it to the AL
 void mouseClicked()
 {
   float xcor = mouseX;
@@ -61,8 +58,7 @@ void mouseClicked()
   Balls.add(new Ball(xcor, ycor, r, col, xspeed, yspeed, s));
 }
 
-//controls growing and shrinking balls, and deals with balls in contact with each other
-void resetStates() 
+void resetStates()
 {
   for (Ball each : Balls)
   {
@@ -75,8 +71,7 @@ void resetStates()
   }
 }
 
-//contact scenario - the moving balls stop and begin growing
-void fixStatesNear(Ball main) 
+void fixStatesNear(Ball main)
 {
   for (Ball each : Balls)
   {
@@ -85,14 +80,14 @@ void fixStatesNear(Ball main)
   }
 }
 
-boolean inVicinity(Ball a, Ball b) //figures distances between balls
+boolean inVicinity(Ball a, Ball b)
 {
   //float leg_1 = abs(a.getX() - b.getY());
   //float leg_2 = abs(a.getY() - b.getY());
   float leg_1 = pow(a.getX() - b.getX(), 2);
   float leg_2 = pow(a.getY() - b.getY(), 2);
-  float hyp = pow(a.getRad() + b.getRad(), 2);
+  float hyp = a.getRad() + b.getRad();
   
   //return leg_1 <= hyp && leg_2 <= hyp;
-  return leg_1 + leg_2 <  hyp / 4;
+  return leg_1 + leg_2 <= hyp;
 }
