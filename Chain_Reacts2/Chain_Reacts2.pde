@@ -19,14 +19,14 @@ void setup()
   size(600, 600);
   Balls = new ArrayList<Ball>();
 
-  for (int i = 0; i < 1; i++)
+  for (int i = 0; i < 30; i++)
   {
     float xcor = random(15, width - 15);
     float ycor = random(15, height - 15);
-    float r = 40;//int(random(25, 50));
+    float r = int(random(25, 50));
     color col = color(int(random(255)), int(random(255)), int(random(255)));
-    float xspeed = 0;//random(-2, 2);
-    float yspeed = 2;//random(-2, 2);
+    float xspeed = random(-8, 8);
+    float yspeed = random(-8, 8);
     int s = MOVING; 
 
     Balls.add(new Ball(xcor, ycor, r, col, xspeed, yspeed, s));
@@ -86,8 +86,8 @@ boolean inVicinity(Ball a, Ball b)
   //float leg_2 = abs(a.getY() - b.getY());
   float leg_1 = pow(a.getX() - b.getX(), 2);
   float leg_2 = pow(a.getY() - b.getY(), 2);
-  float hyp = a.getRad() + b.getRad();
+  float hyp = pow(a.getRad() + b.getRad(), 2);
   
   //return leg_1 <= hyp && leg_2 <= hyp;
-  return leg_1 + leg_2 <= hyp;
+  return leg_1 + leg_2 <  hyp / 4;
 }
