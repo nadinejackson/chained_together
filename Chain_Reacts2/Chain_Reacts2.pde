@@ -1,0 +1,93 @@
+//Team chained_together - T. Fabiha, Nadie Jackson, Raunak Chowdhury
+//APCS2 pd2
+//HW #53: All That Bouncin’ . . . Break!
+//2018-05-24 r
+
+ArrayList<Ball> Balls;
+
+final static int MOVING = 0;
+final static int GROWING = 1;
+final static int SHRINKING = 2;
+final static int DEAD = 3;
+
+final static float CHANGE_FACTOR = .25;
+final static float MAX_RADIUS = 50;
+final static int BOUNDARY = 15;
+
+void setup()
+{
+  size(600, 600);
+  Balls = new ArrayList<Ball>();
+
+  for (int i = 0; i < 1; i++)
+  {
+    float xcor = random(15, width - 15);
+    float ycor = random(15, height - 15);
+    float r = 40;//int(random(25, 50));
+    color col = color(int(random(255)), int(random(255)), int(random(255)));
+    float xspeed = 0;//random(-2, 2);
+    float yspeed = 2;//random(-2, 2);
+    int s = MOVING; 
+
+    Balls.add(new Ball(xcor, ycor, r, col, xspeed, yspeed, s));
+  }
+}
+
+void draw()
+{
+  background(000);
+
+  for (Ball each : Balls)
+  { 
+    each.move();
+    each.position();
+  }
+  resetStates();
+}
+
+void mouseClicked()
+{
+  float xcor = mouseX;
+  float ycor = mouseY;
+  float r = 0;
+  color col = color(int(random(255)), int(random(255)), int(random(255)));
+  float xspeed = 0;
+  float yspeed = 0;
+  int s = GROWING; 
+
+  Balls.add(new Ball(xcor, ycor, r, col, xspeed, yspeed, s));
+}
+
+void resetStates()
+{
+  for (Ball each : Balls)
+  {
+    if (each.getState() == GROWING || each.getState() == SHRINKING)
+      fixStatesNear(each);
+    if (each.getState() == GROWING && each.getRad() >= MAX_RADIUS)
+      each.setState(SHRINKING);
+    if (each.getState() == SHRINKING && each.getRad() <= 0)
+      each.setState(DEAD);
+  }
+}
+
+void fixStatesNear(Ball main)
+{
+  for (Ball each : Balls)
+  {
+    if (each.getState() == MOVING && inVicinity(main, each))
+      each.setState(GROWING);
+  }
+}
+
+boolean inVicinity(Ball a, Ball b)
+{
+  //float leg_1 = abs(a.getX() - b.getY());
+  //float leg_2 = abs(a.getY() - b.getY());
+  float leg_1 = pow(a.getX() - b.getX(), 2);
+  float leg_2 = pow(a.getY() - b.getY(), 2);
+  float hyp = a.getRad() + b.getRad();
+  
+  //return leg_1 <= hyp && leg_2 <= hyp;
+  return leg_1 + leg_2 <= hyp;
+}
